@@ -1,4 +1,11 @@
-
+/**
+ * Owghat script
+ *
+ * @Author:  <Mehdi Bagheri>
+ * @Email:   <mb.programmer at yahoo.com>
+ * @Website: <http://www.reckless.ir>
+ * @Github:  <https://www.github.com/mb-programmer>
+ */
 
 function MyMath()
 {
