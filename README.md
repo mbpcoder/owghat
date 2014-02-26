@@ -1,4 +1,4 @@
 owghat
 ======
 
-calcilate azan time
+calculate azan time
