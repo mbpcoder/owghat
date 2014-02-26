@@ -1,0 +1,4 @@
+owghat
+======
+
+calcilate azan time
