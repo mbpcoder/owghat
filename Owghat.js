@@ -1,0 +1,526 @@
+
+
+function MyMath()
+{
+    this.sind = function(x)
+    {
+        return(Math.sin(Math.PI / 180.0 * x));
+    };
+    this.cosd = function(x)
+    {
+        return(Math.cos(Math.PI / 180.0 * x));
+    };
+    this.tand = function(x)
+    {
+        return(Math.tan(Math.PI / 180.0 * x));
+    };
+    this.atand = function(x)
+    {
+        return(Math.atan(x) * 180.0 / Math.PI);
+    };
+    this.asind = function(x)
+    {
+        return(Math.asin(x) * 180.0 / Math.PI);
+    };
+    this.acosd = function(x)
+    {
+        return(Math.acos(x) * 180.0 / Math.PI);
+    };
+    this.sqrt = function(x)
+    {
+        return(Math.sqrt(x));
+    };
+    this.frac = function(x)
+    {
+        return(x % 1);
+    };
+    this.floor = function(x)
+    {
+        return(Math.floor(x));
+    };
+    this.ceil = function(x)
+    {
+        return(Math.ceil(x));
+    };
+    this.loc2hor = function(z, d, p)
+    {
+        return(this.acosd((this.cosd(z) - this.sind(d) * this.sind(p)) / this.cosd(d) / this.cosd(p)) / 15);
+    };
+    this.Round = function(x, a)
+    {
+        var tmp = x % a;
+        if (tmp < 0)
+            tmp += a;
+        return(tmp);
+    };
+    this.hms = function(x)
+    {
+        x = Math.floor(3600 * x);
+        h = Math.floor(x / 3600);
+        mp = x - 3600 * h;
+        m = Math.floor(mp / 60);
+        s = Math.floor(mp - 60 * m);
+        return(((h < 10) ? "0" : "") + h.toString() + ":" + ((m < 10) ? "0" : "") + m.toString() + ":" + ((s < 10) ? "0" : "") + s.toString());
+    };
+    this.hhh = function(x)
+    {
+        x = Math.floor(3600 * x);
+        h = Math.floor(x / 3600);
+        mp = x - 3600 * h;
+        m = Math.floor(mp / 60);
+        s = Math.floor(mp - 60 * m);
+        return(((h < 10) ? "0" : "") + h.toString());
+    };
+    this.mmm = function(x)
+    {
+        x = Math.floor(3600 * x);
+        h = Math.floor(x / 3600);
+        mp = x - 3600 * h;
+        m = Math.floor(mp / 60);
+        s = Math.floor(mp - 60 * m);
+        return(((m < 10) ? "0" : "") + m.toString());
+    };
+}
+/*----------------------------------------------------------------------*/
+function Owghat(cityIndex, html_id)
+{
+    var cities = [];
+    cities[0] = {longitude: 0, latitude: 0, name: "انتخاب"};
+    cities[1] = {longitude: 49.70, latitude: 34.09, name: "اراک"};
+    cities[2] = {longitude: 48.30, latitude: 38.25, name: "اردبیل"};
+    cities[3] = {longitude: 45.07, latitude: 37.55, name: "ارومیه"};
+    cities[4] = {longitude: 51.64, latitude: 32.68, name: "اصفهان"};
+    cities[5] = {longitude: 48.68, latitude: 31.32, name: "اهواز"};
+    cities[6] = {longitude: 46.42, latitude: 33.64, name: "ایلام"};
+    cities[7] = {longitude: 57.33, latitude: 37.47, name: "بجنورد"};
+    cities[8] = {longitude: 56.29, latitude: 27.19, name: "بندرعباس"};
+    cities[9] = {longitude: 50.84, latitude: 28.97, name: "بوشهر"};
+    cities[10] = {longitude: 59.21, latitude: 32.86, name: "بیرجند"};
+    cities[11] = {longitude: 46.28, latitude: 38.08, name: "تبریز"};
+    cities[12] = {longitude: 51.41, latitude: 35.70, name: "تهران"};
+    cities[13] = {longitude: 48.34, latitude: 33.46, name: "خرمآباد"};
+    cities[14] = {longitude: 49.59, latitude: 37.28, name: "رشت"};
+    cities[15] = {longitude: 60.86, latitude: 29.50, name: "زاهدان"};
+    cities[16] = {longitude: 48.50, latitude: 36.68, name: "زنجان"};
+    cities[17] = {longitude: 53.06, latitude: 36.57, name: "ساری"};
+    cities[18] = {longitude: 53.39, latitude: 35.58, name: "سمنان"};
+    cities[19] = {longitude: 47.00, latitude: 35.31, name: "سنندج"};
+    cities[20] = {longitude: 50.86, latitude: 32.33, name: "شهرکرد"};
+    cities[21] = {longitude: 52.52, latitude: 29.62, name: "شیراز"};
+    cities[22] = {longitude: 50.00, latitude: 36.28, name: "قزوین"};
+    cities[23] = {longitude: 50.88, latitude: 34.64, name: "قم"};
+    cities[24] = {longitude: 57.06, latitude: 30.29, name: "کرمان"};
+    cities[25] = {longitude: 47.09, latitude: 34.34, name: "کرمانشاه"};
+    cities[26] = {longitude: 54.44, latitude: 36.84, name: "گرگان"};
+    cities[27] = {longitude: 59.58, latitude: 36.31, name: "مشهد"};
+    cities[28] = {longitude: 48.52, latitude: 34.80, name: "همدان"};
+    cities[29] = {longitude: 51.59, latitude: 30.67, name: "یاسوج"};
+    cities[30] = {longitude: 54.35, latitude: 31.89, name: "یزد"};
+    var azan_time = [];
+    azan_time[1] = {time: 0, hour: 0, minute: 0, second: 0, isAzan: true, name: "اذان صبح"};
+    azan_time[2] = {time: 0, hour: 0, minute: 0, second: 0, isAzan: true, name: "طلوع خورشید"};
+    azan_time[3] = {time: 0, hour: 0, minute: 0, second: 0, isAzan: true, name: "اذان ظهر"};
+    azan_time[4] = {time: 0, hour: 0, minute: 0, second: 0, isAzan: true, name: "غروب خورشید"};
+    azan_time[5] = {time: 0, hour: 0, minute: 0, second: 0, isAzan: true, name: "اذان مغرب"};
+    var timeRemainingToNextAzan = {hour: 0, minute: 0, message: ""};
+    var myMath = new MyMath();
+    var jalaliDay = null;       //azanday
+    var jalaliMonth = null;     //azanjoomlacmsmonth
+    var jalaliYear = null;
+    var id = html_id; //html div id//
+    this.selectedCityIndex = 27;
+    (cityIndex !== undefined ? selectedCityIndex = cityIndex : true);
+    var main = function()
+    {
+        convertDateToJalali();        
+        var i = selectedCityIndex;
+        if (i === 0)
+            return;
+
+        var longitude = cities[selectedCityIndex].longitude;
+        var latitude = cities[selectedCityIndex].latitude;
+        var ep = sun(jalaliMonth, jalaliDay, 4, longitude);
+        var zr = ep[0];
+        var delta = ep[1];
+        var ha = myMath.loc2hor(108.0, delta, latitude);
+        var t1 = myMath.Round(zr - ha, 24);
+        ep = sun(jalaliMonth, jalaliDay, t1, longitude);
+        zr = ep[0];
+        delta = ep[1];
+        ha = myMath.loc2hor(108.0, delta, latitude);
+        var t1 = myMath.Round(zr - ha + 0.025, 24);
+        azan_time[1].time = myMath.hms(t1);
+        azan_time[1].hour = myMath.hhh(t1);
+        azan_time[1].minute = myMath.mmm(t1);
+
+        ep = sun(jalaliMonth, jalaliDay, 6, longitude);
+        zr = ep[0];
+        delta = ep[1];
+        ha = myMath.loc2hor(90.833, delta, latitude);
+        var t2 = myMath.Round(zr - ha, 24);
+        ep = sun(jalaliMonth, jalaliDay, t2, longitude);
+        zr = ep[0];
+        delta = ep[1];
+        ha = myMath.loc2hor(90.833, delta, latitude);
+        t2 = myMath.Round(zr - ha + 0.008, 24);
+
+        azan_time[2].time = myMath.hms(t2);
+        azan_time[2].hour = myMath.hhh(t2);
+        azan_time[2].minute = myMath.mmm(t2);
+        ep = sun(jalaliMonth, jalaliDay, 12, longitude);
+        ep = sun(jalaliMonth, jalaliDay, ep[0], longitude);
+        zr = ep[0] + 0.01;
+
+        azan_time[3].time = myMath.hms(zr);
+        azan_time[3].hour = myMath.hhh(zr);
+        azan_time[3].minute = myMath.mmm(zr);
+
+        ep = sun(jalaliMonth, jalaliDay, 18, longitude);
+        zr = ep[0];
+        delta = ep[1];
+        ha = myMath.loc2hor(90.833, delta, latitude);
+        var t3 = myMath.Round(zr + ha, 24);
+        ep = sun(jalaliMonth, jalaliDay, t3, longitude);
+        zr = ep[0];
+        delta = ep[1];
+        ha = myMath.loc2hor(90.833, delta, latitude);
+        t3 = myMath.Round(zr + ha - 0.014, 24);
+
+        azan_time[4].time = myMath.hms(t3);
+        azan_time[4].hour = myMath.hhh(t3);
+        azan_time[4].minute = myMath.mmm(t3);
+
+        ep = sun(jalaliMonth, jalaliDay, 18.5, longitude);
+        zr = ep[0];
+        delta = ep[1];
+        ha = myMath.loc2hor(94.3, delta, latitude);
+        var t4 = myMath.Round(zr + ha, 24);
+        ep = sun(jalaliMonth, jalaliDay, t4, longitude);
+        zr = ep[0];
+        delta = ep[1];
+        ha = myMath.loc2hor(94.3, delta, latitude);
+        t4 = myMath.Round(zr + ha + 0.013, 24);
+        azan_time[5].time = myMath.hms(t4);
+        azan_time[5].hour = myMath.hhh(t4);
+        azan_time[5].minute = myMath.mmm(t4);
+        //setTimeout("main()", 60000);
+        shownow();
+    };
+    var convertDateToJalali = function()     //showDate
+    {
+        var date = new Date();
+        var dayOfMonth = date.getDate();
+        var month = date.getMonth() + 1;
+        var year = date.getUTCFullYear();
+        if (year === 0)
+        {
+            year = 2000;
+        }
+        if (year < 1000)
+        {
+            year += 2000;
+        }
+        year -= ((month < 3) || ((month === 3) && (dayOfMonth < 21))) ? 622 : 621;
+        switch (month)
+        {
+            case 1:
+                (dayOfMonth < 21) ? (month = 10, dayOfMonth += 10) : (month = 11, dayOfMonth -= 20);
+                break;
+            case 2:
+                (dayOfMonth < 20) ? (month = 11, dayOfMonth += 11) : (month = 12, dayOfMonth -= 19);
+                break;
+            case 3:
+                (dayOfMonth < 21) ? (month = 12, dayOfMonth += 9) : (month = 1, dayOfMonth -= 20);
+                break;
+            case 4:
+                (dayOfMonth < 21) ? (month = 1, dayOfMonth += 11) : (month = 2, dayOfMonth -= 20);
+                break;
+            case 5:
+            case 6:
+                (dayOfMonth < 22) ? (month -= 3, dayOfMonth += 10) : (month -= 2, dayOfMonth -= 21);
+                break;
+            case 7:
+            case 8:
+            case 9:
+                (dayOfMonth < 23) ? (month -= 3, dayOfMonth += 9) : (month -= 2, dayOfMonth -= 22);
+                break;
+            case 10:
+                (dayOfMonth < 23) ? (month = 7, dayOfMonth += 8) : (month = 8, dayOfMonth -= 22);
+                break;
+            case 11:
+            case 12:
+                (dayOfMonth < 22) ? (month -= 3, dayOfMonth += 9) : (month -= 2, dayOfMonth -= 21);
+                break;
+            default:
+                break;
+        }
+        jalaliDay = dayOfMonth;
+        jalaliMonth = month;
+        jalaliYear = year;
+    };
+    var sun = function(month, day, hour, longitude)
+    {
+        if (month < 7)
+        {
+            day = 31 * (month - 1) + day + hour / 24;
+        }
+        else
+        {
+            day = 6 + 30 * (month - 1) + day + hour / 24;
+        }
+        var M = 74.2023 + 0.98560026 * day;
+        var L = -2.75043 + 0.98564735 * day;
+        var lst = 8.3162159 + 0.065709824 * Math.floor(day) + 1.00273791 * 24 * (day % 1) + longitude / 15;
+        var e = 0.0167065;
+        var omega = 4.85131 - 0.052954 * day;
+        var ep = 23.4384717 + 0.00256 * myMath.cosd(omega);
+        var ed = 180.0 / Math.PI * e;
+        var u = M;
+        for (var i = 1; i < 5; i++)
+        {
+            u = u - (u - ed * myMath.sind(u) - M) / (1 - e * myMath.cosd(u));
+        }
+        var v = 2 * myMath.atand(myMath.tand(u / 2) * Math.sqrt((1 + e) / (1 - e)));
+        var theta = L + v - M - 0.00569 - 0.00479 * myMath.sind(omega);
+        var delta = myMath.asind(myMath.sind(ep) * myMath.sind(theta));
+        var alpha = 180.0 / Math.PI * Math.atan2(myMath.cosd(ep) * myMath.sind(theta), myMath.cosd(theta));
+        if (alpha >= 360)
+        {
+            alpha -= 360;
+        }
+        var ha = lst - alpha / 15;
+        var zr = myMath.Round(hour - ha, 24);
+        return ([zr, delta]);
+    };
+    var offshownow = function()
+    {
+        for (i = 1; i <= 5; i++)
+        {
+            azan_time[i].isAzan = false;
+        }
+    };
+    var shownow = function()
+    {
+        today = new Date();
+        azan_ttt = new Date();
+        azan_ttt.setHours(azan_time[1].hour);
+        azan_ttt.setMinutes(azan_time[1].minute);
+
+        if (azan_ttt.getTime() > today.getTime())
+        {
+            offshownow();
+            azan_time[1].isAzan = true;
+            diff = azan_ttt.getTime() - today.getTime();
+            diff = Math.floor(diff / (1000 * 60));
+            timeRemainingToNextAzan.hour = Math.floor(diff / (60));
+            timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+            //timeRemainingToNextAzan.message = "&#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; <span class='message' style='color: red'>&#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;"
+            timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذان صبح";
+        }
+        else
+        {
+            if (azan_ttt.getTime() === today.getTime())
+            {
+                offshownow();
+                azan_time[1].isAzan = true;
+                timeRemainingToNextAzan.message = "اذان صبح به افق" + cities[selectedCityIndex].name;
+            }
+            else
+            {
+                azan_ttt = new Date();
+                azan_ttt.setHours(azan_time[2].hour);
+                azan_ttt.setMinutes(azan_time[2].minute);
+                if (azan_ttt.getTime() > today.getTime())
+                {
+                    offshownow();
+                    azan_time[2].isAzan = true;
+                    diff = azan_ttt.getTime() - today.getTime();
+                    diff = Math.floor(diff / (1000 * 60));
+                    timeRemainingToNextAzan.hour = Math.floor(diff / (60));
+                    timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                    timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا طلوع خورشید";
+                }
+                else
+                {
+                    if (azan_ttt.getTime() === today.getTime())
+                    {
+                        offshownow();
+                        azan_time[2].isAzan = true;
+                        timeRemainingToNextAzan.message = "طلوع خورشید";
+                    }
+                    else
+                    {
+                        azan_ttt = new Date();
+                        azan_ttt.setHours(azan_time[3].hour);
+                        azan_ttt.setMinutes(azan_time[3].minute);
+                        if (azan_ttt.getTime() > today.getTime())
+                        {
+                            offshownow();
+                            azan_time[3].isAzan = true;
+                            diff = azan_ttt.getTime() - today.getTime();
+                            diff = Math.floor(diff / (1000 * 60));
+                            timeRemainingToNextAzan.hour = Math.floor(diff / (60));
+                            timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                            timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذان ظهر";
+                        }
+                        else
+                        {
+                            if (azan_ttt.getTime() === today.getTime())
+                            {
+                                offshownow();
+                                azan_time[3].isAzan = true;
+                                timeRemainingToNextAzan.message = "اذان ظهر به افق " + cities[selectedCityIndex].name;
+                            }
+                            else
+                            {
+                                azan_ttt = new Date();
+                                azan_ttt.setHours(azan_time[4].hour);
+                                azan_ttt.setMinutes(azan_time[4].minute);
+                                if (azan_ttt.getTime() > today.getTime())
+                                {
+                                    offshownow();
+                                    azan_time[4].isAzan = true;
+                                    diff = azan_ttt.getTime() - today.getTime();
+                                    diff = Math.floor(diff / (1000 * 60));
+                                    timeRemainingToNextAzan.hour = Math.floor(diff / (60));
+                                    timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                                    timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا غروب خورشید";
+                                }
+                                else
+                                {
+                                    if (azan_ttt.getTime() === today.getTime())
+                                    {
+                                        offshownow();
+                                        azan_time[4].isAzan = true;
+                                        timeRemainingToNextAzan.message = "غروب خورشید";
+                                    }
+                                    else
+                                    {
+
+                                        azan_ttt = new Date();
+                                        azan_ttt.setHours(document.getElementById("azan_ht5").value);
+                                        azan_ttt.setMinutes(document.getElementById("azan_mt5").value);
+                                        if (azan_ttt.getTime() > today.getTime())
+                                        {
+                                            offshownow();
+                                            azan_time[5].isAzan = true;
+                                            diff = azan_ttt.getTime() - today.getTime();
+                                            diff = Math.floor(diff / (1000 * 60));
+                                            timeRemainingToNextAzan.hour = Math.floor(diff / (60));
+                                            timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                                            timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذان مغرب";
+                                        }
+                                        else
+                                        {
+                                            if (azan_ttt.getTime() === today.getTime())
+                                            {
+                                                offshownow();
+                                                azan_time[5].isAzan = true;
+                                                timeRemainingToNextAzan.message = "اذان مغرب به افق " + cities[selectedCityIndex].name;
+                                            }
+                                            else
+                                            {
+                                                azan_ttt = new Date();
+                                                azan_ttt.setHours(23);
+                                                azan_ttt.setMinutes(59);
+                                                diff = azan_ttt.getTime() - today.getTime();
+                                                diff = Math.floor(diff / (1000 * 60));
+                                                timeRemainingToNextAzan.hour = Math.floor(diff / (60));
+                                                timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+
+                                                offshownow();
+                                                document.getElementById("azan_p1").src = "flasher.gif";
+
+
+                                                timeRemainingToNextAzan.hour += Math.floor(azan_time[1].hour);
+                                                timeRemainingToNextAzan.minute += Math.floor(azan_time[1].minute);
+                                                timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذادن سبح";
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //setTimeout("shownow()", 20000);
+    };
+    var donokh_show = function()
+    {
+        //document.getElementById("donokh").color="#F27900"
+        //setTimeout("donokh_hide()",500);
+    };
+    var donokh_hide = function()
+    {
+    //document.getElementById("donokh").color="#FFFFFF"
+    //setTimeout("donokh_show()",500);
+    };
+    this.show = function()
+    {
+        //alert(selectedCityIndex);
+        clear();
+        main();
+
+        var table = '';
+        table += '<table border="1" style="text-align: center;width: 100%;height: 100%;">';
+
+        table += '<tr>';
+        table += '<td colspan="3">' + timeRemainingToNextAzan.message + '</td>';
+        table += '</tr>';
+
+        table += '<tr>';
+        table += '<td colspan="3">' + jalaliYear + "-" + jalaliMonth + "-" + jalaliDay + '</td>';
+        table += '</tr>';
+
+        for (var i = 1; i <= 5; i++)
+        {
+            table += '<tr>';
+            table += '<td>' + azan_time[i].name + '</td>';
+            if (azan_time[i].isAzan)
+            {
+                table += '<td><img alt="" src="data:image/gif;base64,R0lGODlhCgAHAJAAAPdxIQAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJGQABACwAAAAACgAHAAACDoxhmYB6DKOMYcLnVFMFACH5BAUKAAEALAAAAAAKAAcAAAIHjI+py+2PCgAh+QQJDwABACwAAAAACgAHAAACDoxhmYB6DKOMYcLnVFMFACH5BAUeAAEALAAAAAAKAAcAAAIHjI+py+2PCgA7"/></td>';
+            }
+            else
+            {
+                table += '<td><img alt="" src="data:image/gif;base64,R0lGODlhCgAHAIABAPdxIf///yH5BAEAAAEALAAAAAAKAAcAAAIOjGGZgHoMo4xhwudUUwUAOw=="/></td>';
+            }
+            table += '<td>' + azan_time[i].time + '</td>';
+            table += '</tr>';
+        }
+
+        table += '<tr>';
+        table += '<td colspan="3">' + createSelect() + '</td>';
+        echo('</tr>');
+        table += '</table>';
+        echo(table);
+    };
+    var echo = function(str)
+    {
+        document.getElementById(id).innerHTML += str;
+    };
+    var clear = function()
+    {
+        document.getElementById(id).innerHTML = "";
+    };
+    var createSelect = function()
+    {
+        var select = "";
+        select += "<select onchange='" + id + ".selectedCityIndex = this.selectedIndex;alert(" + id + ".selectedCityIndex);" + id + ".show();'>";
+        for (var j = 0; j < cities.length; j++)
+        {
+            console.log(this.selectedCityIndex);
+            if (j == this.selectedCityIndex)
+            {
+                select += "<option selected value='" + cities[j].name + "'>" + cities[j].name + "</option>";
+            }
+            else
+            {
+                select += "<option value='" + cities[j].name + "'>" + cities[j].name + "</option>";
+            }
+        }
+        select += "</select>";
+        return select;
+    };
+}
