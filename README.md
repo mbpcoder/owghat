@@ -1,6 +1,6 @@
 owghat
 ======
 
-calculate azan time
+calculate pray time
 
 The MIT License (MIT)
