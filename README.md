@@ -1,4 +1,4 @@
-owghat
+Pray Time
 ======
 
 calculate pray time
