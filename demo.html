@@ -1,46 +1,46 @@
 <!DOCTYPE html>
 <html>
-<head>
-    <title>Mehdi Bagheri</title>
-    <script src="Owghat.js">
-    </script>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <style>
-        div#owghat {
-            text-align: center;
-            padding: 10px;
-            width: 500px;
-            height: 500px;
-            background-color: #98fb98;
-        }
+    <head>
+        <meta charset="UTF-8">
+        <title>Mehdi Bagheri</title>
+        <script src="Owghat.js">
+        </script>
+        <style>
+            div#owghat {
+                text-align: center;
+                padding: 10px;
+                width: 500px;
+                height: 500px;
+                background-color: #98fb98;
+            }
 
-        div#left {
-            float: left;
-            background-color: red;
-            height: 90%;
-            width: 40%;
-        }
+            div#left {
+                float: left;
+                background-color: red;
+                height: 90%;
+                width: 40%;
+            }
 
-        div#right {
-            float: right;
-            background-color: green;
-            height: 90%;
-            width: 40%;
-        }
+            div#right {
+                float: right;
+                background-color: green;
+                height: 90%;
+                width: 40%;
+            }
 
-        div#image {
-            float: left;
-            background-color: #0000ff;
-            height: 90%;
-            width: 20%;
-        }
-    </style>
-</head>
-<body style="direction: rtl;">
-    <div  style="width:500px;" id="owghat_1"></div>
-    <script>
-        owghat_1 = new Owghat(27, "owghat_1");
-        owghat_1.show();
-    </script>
-</body>
+            div#image {
+                float: left;
+                background-color: #0000ff;
+                height: 90%;
+                width: 20%;
+
+            }
+        </style>
+    </head>
+    <body style="direction: rtl;">
+        <div  style="width:500px;" id="owghat_1"></div>
+        <script>
+            Owghat.run({selectedCityIndex: 27, id: "owghat_1"});
+        </script>
+    </body>
 </html>
