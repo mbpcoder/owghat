@@ -56,7 +56,7 @@ var MyMath = new function()
     this.Round = function(x, a)
     {
         var tmp = x % a;
-        if(tmp < 0)
+        if (tmp < 0)
             tmp += a;
         return(tmp);
     };
@@ -151,7 +151,7 @@ var Owghat = new function()
     {
         convertDateToJalali();
         var i = selectedCityIndex;
-        if(i === 0)
+        if (i === 0)
             return;
 
         var longitude = cities[selectedCityIndex].longitude;
@@ -229,11 +229,11 @@ var Owghat = new function()
         var dayOfMonth = date.getDate();
         var month = date.getMonth() + 1;
         var year = date.getUTCFullYear();
-        if(year === 0)
+        if (year === 0)
         {
             year = 2000;
         }
-        if(year < 1000)
+        if (year < 1000)
         {
             year += 2000;
         }
@@ -277,7 +277,7 @@ var Owghat = new function()
     };
     var sun = function(month, day, hour, longitude)
     {
-        if(month < 7)
+        if (month < 7)
         {
             day = 31 * (month - 1) + day + hour / 24;
         }
@@ -293,7 +293,7 @@ var Owghat = new function()
         var ep = 23.4384717 + 0.00256 * MyMath.cosd(omega);
         var ed = 180.0 / Math.PI * e;
         var u = M;
-        for (var i = 1;i < 5;i++)
+        for (var i = 1; i < 5; i++)
         {
             u = u - (u - ed * MyMath.sind(u) - M) / (1 - e * MyMath.cosd(u));
         }
@@ -301,7 +301,7 @@ var Owghat = new function()
         var theta = L + v - M - 0.00569 - 0.00479 * MyMath.sind(omega);
         var delta = MyMath.asind(MyMath.sind(ep) * MyMath.sind(theta));
         var alpha = 180.0 / Math.PI * Math.atan2(MyMath.cosd(ep) * MyMath.sind(theta), MyMath.cosd(theta));
-        if(alpha >= 360)
+        if (alpha >= 360)
         {
             alpha -= 360;
         }
@@ -311,7 +311,7 @@ var Owghat = new function()
     };
     var offshownow = function()
     {
-        for (i = 1;i <= 5;i++)
+        for (i = 1; i <= 5; i++)
         {
             azan_time[i].isAzan = false;
         }
@@ -323,7 +323,7 @@ var Owghat = new function()
         azan_ttt.setHours(azan_time[1].hour);
         azan_ttt.setMinutes(azan_time[1].minute);
 
-        if(azan_ttt.getTime() > today.getTime())
+        if (azan_ttt.getTime() > today.getTime())
         {
             offshownow();
             azan_time[1].isAzan = true;
@@ -331,12 +331,16 @@ var Owghat = new function()
             diff = Math.floor(diff / (1000 * 60));
             timeRemainingToNextAzan.hour = Math.floor(diff / (60));
             timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+            if (timeRemainingToNextAzan.minute >= 60) {
+                timeRemainingToNextAzan.hour++;
+                timeRemainingToNextAzan.minute -= 60;
+            }
             //timeRemainingToNextAzan.message = "&#1605;&#1575;&#1606;&#1583;&#1607; &#1578;&#1575; <span class='message' style='color: red'>&#1575;&#1584;&#1575;&#1606; &#1589;&#1576;&#1581;"
             timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذان صبح";
         }
         else
         {
-            if(azan_ttt.getTime() === today.getTime())
+            if (azan_ttt.getTime() === today.getTime())
             {
                 offshownow();
                 azan_time[1].isAzan = true;
@@ -347,7 +351,7 @@ var Owghat = new function()
                 azan_ttt = new Date();
                 azan_ttt.setHours(azan_time[2].hour);
                 azan_ttt.setMinutes(azan_time[2].minute);
-                if(azan_ttt.getTime() > today.getTime())
+                if (azan_ttt.getTime() > today.getTime())
                 {
                     offshownow();
                     azan_time[2].isAzan = true;
@@ -355,11 +359,15 @@ var Owghat = new function()
                     diff = Math.floor(diff / (1000 * 60));
                     timeRemainingToNextAzan.hour = Math.floor(diff / (60));
                     timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                    if (timeRemainingToNextAzan.minute >= 60) {
+                        timeRemainingToNextAzan.hour++;
+                        timeRemainingToNextAzan.minute -= 60;
+                    }
                     timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا طلوع خورشید";
                 }
                 else
                 {
-                    if(azan_ttt.getTime() === today.getTime())
+                    if (azan_ttt.getTime() === today.getTime())
                     {
                         offshownow();
                         azan_time[2].isAzan = true;
@@ -370,7 +378,7 @@ var Owghat = new function()
                         azan_ttt = new Date();
                         azan_ttt.setHours(azan_time[3].hour);
                         azan_ttt.setMinutes(azan_time[3].minute);
-                        if(azan_ttt.getTime() > today.getTime())
+                        if (azan_ttt.getTime() > today.getTime())
                         {
                             offshownow();
                             azan_time[3].isAzan = true;
@@ -378,11 +386,15 @@ var Owghat = new function()
                             diff = Math.floor(diff / (1000 * 60));
                             timeRemainingToNextAzan.hour = Math.floor(diff / (60));
                             timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                            if (timeRemainingToNextAzan.minute >= 60) {
+                                timeRemainingToNextAzan.hour++;
+                                timeRemainingToNextAzan.minute -= 60;
+                            }
                             timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذان ظهر";
                         }
                         else
                         {
-                            if(azan_ttt.getTime() === today.getTime())
+                            if (azan_ttt.getTime() === today.getTime())
                             {
                                 offshownow();
                                 azan_time[3].isAzan = true;
@@ -393,7 +405,7 @@ var Owghat = new function()
                                 azan_ttt = new Date();
                                 azan_ttt.setHours(azan_time[4].hour);
                                 azan_ttt.setMinutes(azan_time[4].minute);
-                                if(azan_ttt.getTime() > today.getTime())
+                                if (azan_ttt.getTime() > today.getTime())
                                 {
                                     offshownow();
                                     azan_time[4].isAzan = true;
@@ -401,11 +413,15 @@ var Owghat = new function()
                                     diff = Math.floor(diff / (1000 * 60));
                                     timeRemainingToNextAzan.hour = Math.floor(diff / (60));
                                     timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                                    if (timeRemainingToNextAzan.minute >= 60) {
+                                        timeRemainingToNextAzan.hour++;
+                                        timeRemainingToNextAzan.minute -= 60;
+                                    }
                                     timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا غروب خورشید";
                                 }
                                 else
                                 {
-                                    if(azan_ttt.getTime() === today.getTime())
+                                    if (azan_ttt.getTime() === today.getTime())
                                     {
                                         offshownow();
                                         azan_time[4].isAzan = true;
@@ -415,9 +431,9 @@ var Owghat = new function()
                                     {
 
                                         azan_ttt = new Date();
-                                        azan_ttt.setHours(document.getElementById("azan_ht5").value);
-                                        azan_ttt.setMinutes(document.getElementById("azan_mt5").value);
-                                        if(azan_ttt.getTime() > today.getTime())
+                                        azan_ttt.setHours(azan_time[5].hour);
+                                        azan_ttt.setMinutes(azan_time[5].minute);
+                                        if (azan_ttt.getTime() > today.getTime())
                                         {
                                             offshownow();
                                             azan_time[5].isAzan = true;
@@ -425,11 +441,15 @@ var Owghat = new function()
                                             diff = Math.floor(diff / (1000 * 60));
                                             timeRemainingToNextAzan.hour = Math.floor(diff / (60));
                                             timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                                            if (timeRemainingToNextAzan.minute >= 60) {
+                                                timeRemainingToNextAzan.hour++;
+                                                timeRemainingToNextAzan.minute -= 60;
+                                            }
                                             timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذان مغرب";
                                         }
                                         else
                                         {
-                                            if(azan_ttt.getTime() === today.getTime())
+                                            if (azan_ttt.getTime() === today.getTime())
                                             {
                                                 offshownow();
                                                 azan_time[5].isAzan = true;
@@ -444,14 +464,24 @@ var Owghat = new function()
                                                 diff = Math.floor(diff / (1000 * 60));
                                                 timeRemainingToNextAzan.hour = Math.floor(diff / (60));
                                                 timeRemainingToNextAzan.minute = diff - (timeRemainingToNextAzan.hour * 60);
+                                                if (timeRemainingToNextAzan.minute >= 60) {
+                                                    timeRemainingToNextAzan.hour++;
+                                                    timeRemainingToNextAzan.minute -= 60;
+                                                }
 
                                                 offshownow();
-                                                document.getElementById("azan_p1").src = "flasher.gif";
+                                                azan_time[1].isAzan = true;
+                                                //document.getElementById("azan_p1").src = "flasher.gif";
 
 
                                                 timeRemainingToNextAzan.hour += Math.floor(azan_time[1].hour);
                                                 timeRemainingToNextAzan.minute += Math.floor(azan_time[1].minute);
-                                                timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذادن سبح";
+                                                if (timeRemainingToNextAzan.minute >= 60) {
+                                                    timeRemainingToNextAzan.hour++;
+                                                    timeRemainingToNextAzan.minute -= 60;
+                                                }
+
+                                                timeRemainingToNextAzan.message = timeRemainingToNextAzan.hour + ":" + timeRemainingToNextAzan.minute + " مانده تا اذادن صبح";
                                             }
                                         }
                                     }
@@ -477,7 +507,7 @@ var Owghat = new function()
     var show = function()
     {
         var table = '';
-        table += '<table border="1" style="text-align: center;width: 100%;height: 100%;">';
+        table += '<table style="text-align: center;width: 100%;height: 100%;">';
 
         table += '<tr>';
         table += '<td colspan="3">' + timeRemainingToNextAzan.message + '</td>';
@@ -487,11 +517,11 @@ var Owghat = new function()
         table += '<td colspan="3">' + jalaliYear + "-" + jalaliMonth + "-" + jalaliDay + '</td>';
         table += '</tr>';
 
-        for (var i = 1;i <= 5;i++)
+        for (var i = 1; i <= 5; i++)
         {
             table += '<tr>';
             table += '<td>' + azan_time[i].name + '</td>';
-            if(azan_time[i].isAzan)
+            if (azan_time[i].isAzan)
             {
                 table += '<td><img alt="" src="data:image/gif;base64,R0lGODlhCgAHAJAAAPdxIQAAACH/C05FVFNDQVBFMi4wAwEAAAAh+QQJGQABACwAAAAACgAHAAACDoxhmYB6DKOMYcLnVFMFACH5BAUKAAEALAAAAAAKAAcAAAIHjI+py+2PCgAh+QQJDwABACwAAAAACgAHAAACDoxhmYB6DKOMYcLnVFMFACH5BAUeAAEALAAAAAAKAAcAAAIHjI+py+2PCgA7"/></td>';
             }
@@ -521,9 +551,9 @@ var Owghat = new function()
     {
         var select = "";
         select += "<select onchange='Owghat.run({selectedCityIndex:this.value , id:\"" + id + "\"});' > ";
-        for (var j = 0;j < cities.length;j++)
+        for (var j = 0; j < cities.length; j++)
         {
-            if(j == selectedCityIndex)
+            if (j == selectedCityIndex)
             {
                 select += "<option selected value='" + cities[j].value + "'>" + cities[j].name + "</option>";
             }
@@ -540,7 +570,7 @@ var Owghat = new function()
         var settings = {};
         for (var i in defaults)
         {
-            if(options.hasOwnProperty(i))
+            if (options.hasOwnProperty(i))
             {
                 settings[i] = options[i];
             }
