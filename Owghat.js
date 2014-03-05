@@ -91,7 +91,7 @@ var MyMath = new function()
 /*----------------------------------------------------------------------*/
 var Owghat = new function()
 {
-    var defaults = {selectedCityIndex: 27, id: "owghat_1", };
+    var defaults = {selectedCityIndex: 27, id: "owghat_1"};
     var settings = {};
     var selectedCityIndex = 0;
     var id = 0;
@@ -464,16 +464,6 @@ var Owghat = new function()
         }
         //setTimeout("shownow()", 20000);
     };
-    var donokh_show = function()
-    {
-        //document.getElementById("donokh").color="#F27900"
-        //setTimeout("donokh_hide()",500);
-    };
-    var donokh_hide = function()
-    {
-        //document.getElementById("donokh").color="#FFFFFF"
-        //setTimeout("donokh_show()",500);
-    };
     var show = function()
     {
         var table = '';
@@ -550,5 +540,5 @@ var Owghat = new function()
             }
         }
         return settings;
-    }
-}
+    };
+};
